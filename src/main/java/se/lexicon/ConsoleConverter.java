@@ -11,51 +11,51 @@ public class ConsoleConverter {
        CurrencyConversionUtil. displayMenu();
         Scanner in= new Scanner(System.in).useLocale(Locale.US);
         int choice=in.nextInt();
-        doConversion(choice,in);
+        System.out.println("Enter the amount to be converted  : ");
+        double amount=in.nextDouble();
+        doConversion(choice,amount);
 
 
     }
 
-    public static void doConversion(int choice,Scanner in) {
+    public static void doConversion(int choice, double amount) {
         switch (choice){
             case 1:
-                System.out.println("Enter SEK amount to be converted to USD : ");
-                double sek= in.nextDouble();
-                double usdAmount=CurrencyConverter.conversion(sek, CurrencyRateConstants.SEK_TO_USD_RATE);
-                System.out.println(sek+" SEK = "+CurrencyConversionUtil.currencyFormat(usdAmount)+" USD"+ " as on "+CurrencyConversionUtil.cuurentDate()+" "+CurrencyConversionUtil.currentTime());
+                double usdAmount=CurrencyConverter.conversion(amount, CurrencyRateConstants.SEK_TO_USD_RATE);
+                displayConversionResults(amount,usdAmount,CurrencyRateConstants.SEK,CurrencyRateConstants.USD);
                 break;
 
             case 2:
-                System.out.println("Enter USD amount to be converted to SEK : ");
-                double usd= in.nextDouble();
-                double sekAmount=CurrencyConverter.conversion(usd, CurrencyRateConstants.USD_TO_SEK_RATE);
-                System.out.println(usd+" USD = "+CurrencyConversionUtil.currencyFormat(sekAmount)+" SEK"+ " as on "+CurrencyConversionUtil.cuurentDate()+" "+CurrencyConversionUtil.currentTime());
+                double sekAmount=CurrencyConverter.conversion(amount, CurrencyRateConstants.USD_TO_SEK_RATE);
+                displayConversionResults(amount, sekAmount, CurrencyRateConstants.USD, CurrencyRateConstants.SEK);
                 break;
 
             case 3:
-                System.out.println("Enter SEK amount to be converted to Euro : ");
-                double sekEuro= in.nextDouble();
-                double sekEuroAmount=CurrencyConverter.conversion(sekEuro, CurrencyRateConstants.SEK_TO_EURO_RATE);
-                System.out.println(sekEuro+" SEK = "+CurrencyConversionUtil.currencyFormat(sekEuroAmount)+" EUR"+ " as on "+CurrencyConversionUtil.cuurentDate()+" "+CurrencyConversionUtil.currentTime() );
+                double euroAmount=CurrencyConverter.conversion(amount, CurrencyRateConstants.SEK_TO_EURO_RATE);
+                displayConversionResults(amount, euroAmount, CurrencyRateConstants.SEK, CurrencyRateConstants.EUR);
                 break;
 
             case 4:
-                System.out.println("Enter Euro amount to be converted to SEK : ");
-                double euroAmount= in.nextDouble();
-                double euroSekAmount=CurrencyConverter.conversion(euroAmount, CurrencyRateConstants.EURO_TO_SEK_RATE);
-                System.out.println(euroAmount+" EUR = "+CurrencyConversionUtil.currencyFormat(euroSekAmount)+" SEK"+ " as on "+CurrencyConversionUtil.cuurentDate()+" "+CurrencyConversionUtil.currentTime());
+                 double euroSekAmount=CurrencyConverter.conversion(amount, CurrencyRateConstants.EURO_TO_SEK_RATE);
+                displayConversionResults(amount,euroSekAmount,CurrencyRateConstants.EUR,CurrencyRateConstants.SEK);
                 break;
 
             case 0:
                 break;
 
             default:
-                System.out.println("Please enter the amount to be converted");
+                System.out.println("Please choose your choice from the menu ");
                 break;
         }
     }
 
+   /* private static double inputValidation(double amt) {
 
+    }*/
+
+    private static void displayConversionResults(double amount, double convertedAmount, String currency, String convertedCurrency){
+       System.out.println(amount+" "+currency+" = "+CurrencyConversionUtil.currencyFormat(convertedAmount)+" "+convertedCurrency+ " as on "+CurrencyConversionUtil.cuurentDate()+" "+CurrencyConversionUtil.currentTime());
+    }
 
 
 }
