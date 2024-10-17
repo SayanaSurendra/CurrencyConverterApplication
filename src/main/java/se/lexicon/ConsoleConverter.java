@@ -2,18 +2,27 @@ package se.lexicon;
 
 import se.lexicon.constants.CurrencyRateConstants;
 import se.lexicon.utils.CurrencyConversionUtil;
-import java.util.Locale;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleConverter {
 
     static void runConverter(){
-       CurrencyConversionUtil. displayMenu();
-        Scanner in= new Scanner(System.in).useLocale(Locale.US);
+        CurrencyConversionUtil. displayMenu();
+        Scanner in= new Scanner(System.in);
         int choice=in.nextInt();
         System.out.println("Enter the amount to be converted  : ");
-        double amount=in.nextDouble();
-        doConversion(choice,amount);
+        //
+        try {
+            double amt=in.nextDouble();
+            if(inputValidation(amt)) {
+                doConversion(choice, amt);
+            }else{
+                System.out.println("==Please enter a valid amount==");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid amount.Please specify valid amount");
+        }
 
 
     }
@@ -49,12 +58,19 @@ public class ConsoleConverter {
         }
     }
 
-   /* private static double inputValidation(double amt) {
+    private static boolean inputValidation(double amt) {
+        boolean isValidAmount=false;
+        if(amt > 0){
+            isValidAmount=true;
+        }else{
+            System.out.println("Please enter a positive amount"); 
+        }
+        return isValidAmount;
 
-    }*/
+    }
 
     private static void displayConversionResults(double amount, double convertedAmount, String currency, String convertedCurrency){
-       System.out.println(amount+" "+currency+" = "+CurrencyConversionUtil.currencyFormat(convertedAmount)+" "+convertedCurrency+ " as on "+CurrencyConversionUtil.cuurentDate()+" "+CurrencyConversionUtil.currentTime());
+       System.out.println(amount+" "+currency+" = "+CurrencyConversionUtil.currencyFormat(convertedAmount)+" "+convertedCurrency+ " as on "+CurrencyConversionUtil.currentDate()+" "+CurrencyConversionUtil.currentTime());
     }
 
 
