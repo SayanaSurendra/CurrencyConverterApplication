@@ -31,7 +31,7 @@ public class CurrencyConversionUtil {
 
     public static String cuurentDate(){
         LocalDate dt=LocalDate.now();
-        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd MMMM");
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd MMMM, yyyy");
         String formattedDate = dt.format(formatter);
         return formattedDate;
 
