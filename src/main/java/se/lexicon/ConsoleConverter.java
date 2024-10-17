@@ -8,22 +8,12 @@ import java.util.Scanner;
 public class ConsoleConverter {
 
     static void runConverter(){
-        CurrencyConversionUtil. displayMenu();
+        CurrencyConversionUtil.displayMenu();
         Scanner in= new Scanner(System.in);
         int choice=in.nextInt();
-        System.out.println("Enter the amount to be converted  : ");
-        //
-        try {
-            double amt=in.nextDouble();
-            if(inputValidation(amt)) {
-                doConversion(choice, amt);
-            }else{
-                System.out.println("==Please enter a valid amount==");
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid amount.Please specify valid amount");
-        }
-
+        double amount=inputValidation(in);
+        in.close();
+        doConversion(choice, amount);
 
     }
 
@@ -58,19 +48,33 @@ public class ConsoleConverter {
         }
     }
 
-    private static boolean inputValidation(double amt) {
-        boolean isValidAmount=false;
-        if(amt > 0){
-            isValidAmount=true;
-        }else{
-            System.out.println("Please enter a positive amount"); 
-        }
-        return isValidAmount;
 
-    }
 
     private static void displayConversionResults(double amount, double convertedAmount, String currency, String convertedCurrency){
        System.out.println(amount+" "+currency+" = "+CurrencyConversionUtil.currencyFormat(convertedAmount)+" "+convertedCurrency+ " as on "+CurrencyConversionUtil.currentDate()+" "+CurrencyConversionUtil.currentTime());
+    }
+
+
+    public static double  inputValidation(Scanner in){
+        boolean isAmountValid=false;
+        double amount=0;
+        while(!isAmountValid) {
+            try {
+                System.out.println("Enter the amount to be converted  : ");
+                 amount = in.nextDouble();
+                if (amount > 0 ) {
+                    isAmountValid = true;
+
+                } else {
+                    System.out.println("Invalid Amount. Please enter valid amount");
+                }
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid amount.Please specify valid amount");
+                in.nextLine();
+            }
+        }
+        return amount;
     }
 
 
